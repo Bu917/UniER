@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniER | Unified Exercise Recommendation Benchmark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #ffffff;
+            --surface: #f6f8fb;
+            --surface-strong: #edf3f8;
+            --sidebar: #f1f4f7;
+            --text: #172033;
+            --muted: #5f6e83;
+            --soft: #8b9aad;
+            --line: #dbe3ec;
+            --blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --teal: #0f766e;
+            --amber: #b45309;
+            --green: #15803d;
+            --red: #b91c1c;
+            --shadow: 0 10px 30px rgba(23, 32, 51, 0.08);
+            --radius: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            color: var(--blue);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 100;
+            display: flex;
+            width: 280px;
+            flex-direction: column;
+            overflow-y: auto;
+            border-right: 1px solid var(--line);
+            background: var(--sidebar);
+            padding: 2rem 0;
+        }
+
+        .sidebar-header {
+            border-bottom: 1px solid var(--line);
+            padding: 0 1.6rem 1.4rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--blue);
+            font-size: 1.7rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.3rem;
+        }
+
+        .sidebar-subtitle {
+            margin-top: 0.6rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1.5rem 1.1rem;
+        }
+
+        .nav-category {
+            margin: 0.6rem 0 0.7rem;
+            padding-left: 0.6rem;
+            color: var(--blue);
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.25rem;
+            padding: 0.74rem 0.9rem;
+            border-radius: var(--radius);
+            color: var(--muted);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-link i {
+            width: 18px;
+            text-align: center;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #dbeafe;
+            color: var(--blue-dark);
+        }
+
+        .main {
+            width: calc(100% - 280px);
+            margin-left: 280px;
+            background: var(--bg);
+        }
+
+        .hero {
+            position: relative;
+            min-height: 82vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            border-bottom: 1px solid var(--line);
+            background: #f8fbff;
+        }
+
+        .hero-inner {
+            position: relative;
+            z-index: 1;
+            width: min(1180px, calc(100% - 4rem));
+            margin: 0 auto;
+            padding: 4.5rem 0 5.5rem;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.4rem;
+            color: var(--teal);
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            max-width: 900px;
+            color: var(--text);
+            font-size: clamp(3rem, 7vw, 6.2rem);
+            line-height: 0.98;
+            letter-spacing: 0;
+            font-weight: 800;
+        }
+
+        .hero-title-tail {
+            display: block;
+            max-width: 100%;
+            margin-top: 0.7rem;
+            color: var(--blue);
+            font-size: clamp(1.55rem, 3.5vw, 3.2rem);
+            line-height: 1.08;
+            overflow-wrap: break-word;
+        }
+
+        .hero-copy {
+            max-width: 760px;
+            margin-top: 1.35rem;
+            color: var(--muted);
+            font-size: 1.18rem;
+            overflow-wrap: break-word;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 2rem;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.55rem;
+            max-width: 100%;
+            min-height: 44px;
+            border-radius: var(--radius);
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--line);
+            background: #ffffff;
+            color: var(--text);
+            font-weight: 800;
+            text-decoration: none;
+            box-shadow: 0 4px 14px rgba(23, 32, 51, 0.06);
+        }
+
+        .button.primary {
+            border-color: var(--blue);
+            background: var(--blue);
+            color: #ffffff;
+        }
+
+        .button:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+
+        .button.primary:hover {
+            background: var(--blue-dark);
+            color: #ffffff;
+        }
+
+        .stat-strip {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(130px, 1fr));
+            gap: 0.8rem;
+            max-width: 860px;
+            margin-top: 2.2rem;
+        }
+
+        .stat-pill {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.88);
+            padding: 0.85rem 1rem;
+        }
+
+        .stat-pill strong {
+            display: block;
+            color: var(--text);
+            font-size: 1.55rem;
+            line-height: 1;
+        }
+
+        .stat-pill span {
+            display: block;
+            margin-top: 0.35rem;
+            color: var(--muted);
+            font-size: 0.84rem;
+            font-weight: 700;
+        }
+
+        .section {
+            border-bottom: 1px solid var(--line);
+            padding: 4.6rem 0;
+        }
+
+        .section.alt {
+            background: var(--surface);
+        }
+
+        .section-inner {
+            width: min(1180px, calc(100% - 4rem));
+            margin: 0 auto;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            color: var(--text);
+            font-size: clamp(2rem, 4vw, 3rem);
+            line-height: 1.1;
+            letter-spacing: 0;
+            font-weight: 800;
+        }
+
+        .section-lede {
+            max-width: 680px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .section-heading.stacked {
+            display: block;
+        }
+
+        .section-heading.stacked .section-lede {
+            margin-top: 0.75rem;
+        }
+
+        .grid {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .grid.two {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .grid.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .grid.four {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .panel {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            padding: 1.25rem;
+            box-shadow: 0 4px 18px rgba(23, 32, 51, 0.04);
+        }
+
+        .panel h3,
+        .panel h4 {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-bottom: 0.75rem;
+            color: var(--text);
+            font-size: 1.1rem;
+        }
+
+        .panel h3 i,
+        .panel h4 i {
+            color: var(--blue);
+        }
+
+        .panel p {
+            color: var(--muted);
+        }
+
+        .panel .small {
+            color: var(--soft);
+            font-size: 0.88rem;
+        }
+
+        .people-group {
+            margin-top: 1.4rem;
+        }
+
+        .people-group:first-of-type {
+            margin-top: 0;
+        }
+
+        .people-group h3 {
+            margin-bottom: 1.3rem;
+            color: var(--text);
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+
+        .people-grid {
+            display: grid;
+            gap: 2.2rem 2rem;
+            justify-items: center;
+        }
+
+        .people-grid.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .people-grid.two {
+            grid-template-columns: repeat(2, minmax(0, 220px));
+            justify-content: center;
+        }
+
+        .people-grid + .people-grid {
+            margin-top: 2.2rem;
+        }
+
+        .person-card {
+            width: min(100%, 220px);
+            text-align: center;
+        }
+
+        .person-photo,
+        .person-placeholder {
+            display: grid;
+            place-items: center;
+            width: 104px;
+            height: 104px;
+            margin: 0 auto 0.75rem;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: #eef4ff;
+        }
+
+        .person-photo {
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            box-shadow: 0 4px 12px rgba(23, 32, 51, 0.06);
+        }
+
+        .photo-quanlong {
+            background-image: url("./Claw/images/Quanlong Guan.jpg");
+            background-position: center 34%;
+        }
+
+        .photo-shirui {
+            background-image: url("./Claw/images/Shirui Pan.jpg");
+            background-position: center 38%;
+        }
+
+        .photo-liangda {
+            background-image: url("./Claw/images/Liangda Fang.jpg");
+            background-position: center 30%;
+        }
+
+        .photo-jiapu {
+            background-image: url("./Claw/images/Jiapu Wang.jpg");
+            background-position: center 48%;
+            background-size: 112%;
+        }
+
+        .photo-yixin {
+            background-image: url("./Claw/images/Yixin Liu.jpg");
+            background-position: center 40%;
+        }
+
+        .photo-xinghe {
+            background-image: url("./Claw/images/Xinghe Cheng.jpg");
+            background-position: center 52%;
+            background-size: 142%;
+        }
+
+        .photo-guiyong {
+            background-image: url("./Claw/images/Guiyong Zhuang.jpg");
+            background-position: center 32%;
+        }
+
+        .photo-yusheng {
+            background-image: url("./Claw/images/Yusheng Xie.jpg");
+            background-position: center 32%;
+            background-size: 104%;
+        }
+
+        .person-placeholder {
+            color: var(--blue-dark);
+            font-size: 1.35rem;
+            font-weight: 800;
+        }
+
+        .person-name {
+            color: var(--blue);
+            font-weight: 700;
+            line-height: 1.35;
+        }
+
+        .person-name a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .person-name a:hover {
+            text-decoration: underline;
+        }
+
+        .person-note {
+            margin-top: 0.45rem;
+            color: var(--text);
+            font-size: 0.92rem;
+            line-height: 1.45;
+        }
+
+        .callout {
+            border-left: 4px solid var(--blue);
+            background: #eff6ff;
+            padding: 1rem 1.1rem;
+        }
+
+        .framework-image {
+            margin-top: 1.5rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            padding: 1rem;
+            box-shadow: var(--shadow);
+        }
+
+        .framework-image img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 0.85rem;
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 28px;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--surface);
+            color: var(--text);
+            padding: 0.25rem 0.65rem;
+            font-size: 0.82rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .tag.top {
+            border-color: #bbf7d0;
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .tag.pending {
+            border-color: #fed7aa;
+            background: #fff7ed;
+            color: #9a3412;
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            box-shadow: 0 4px 18px rgba(23, 32, 51, 0.04);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 760px;
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid var(--line);
+            padding: 0.82rem 0.9rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: var(--surface-strong);
+            color: var(--text);
+            font-size: 0.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        td {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .method-table td:first-child {
+            color: var(--text);
+            font-weight: 800;
+        }
+
+        .formula {
+            margin: 1rem 0;
+            overflow-x: auto;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #f8fbff;
+            color: var(--text);
+            padding: 1rem 1.1rem;
+            font-family: "Consolas", "SFMono-Regular", monospace;
+            font-size: 0.92rem;
+            line-height: 1.7;
+            box-shadow: inset 4px 0 0 #bfdbfe;
+            white-space: nowrap;
+        }
+
+        .formula sub,
+        .formula sup {
+            color: var(--blue-dark);
+            font-size: 0.76em;
+        }
+
+        .metric-list {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 0.75rem;
+        }
+
+        .metric-item {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            padding: 0.9rem;
+        }
+
+        .metric-item strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 0.35rem;
+        }
+
+        .metric-item span {
+            display: block;
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        @media (max-width: 1180px) {
+            .grid.four,
+            .metric-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .stat-strip {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 900px) {
+            .mobile-menu-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.25s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .hero {
+                min-height: 76vh;
+            }
+
+            .hero-inner,
+            .section-inner {
+                width: calc(100% - 2rem);
+                max-width: 720px;
+            }
+
+            .section-heading,
+            .grid.two,
+            .grid.three,
+            .grid.four,
+            .people-grid.three,
+            .people-grid.two {
+                grid-template-columns: 1fr;
+                display: grid;
+            }
+        }
+
+        @media (max-width: 580px) {
+            .hero h1 {
+                font-size: 2.65rem;
+            }
+
+            .hero-title-tail {
+                font-size: 1.28rem;
+                line-height: 1.16;
+            }
+
+            .hero-copy {
+                font-size: 1rem;
+            }
+
+            .stat-strip,
+            .metric-list {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-actions {
+                align-items: stretch;
+                flex-direction: column;
+            }
+
+            .button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="#home" class="logo"><i class="fas fa-route"></i> UniER</a>
+                <p class="sidebar-subtitle">Unified benchmark for item-level and path-level exercise recommendation.</p>
+            </div>
+            <nav class="sidebar-nav" aria-label="Primary navigation">
+                <div class="nav-category">Benchmark</div>
+                <a class="nav-link active" href="#home"><i class="fas fa-house"></i> Home</a>
+                <a class="nav-link" href="#overview"><i class="fas fa-compass"></i> Overview</a>
+                <a class="nav-link" href="#paradigms"><i class="fas fa-diagram-project"></i> Paradigms</a>
+                <a class="nav-link" href="#datasets"><i class="fas fa-database"></i> Datasets</a>
+                <a class="nav-link" href="#evaluation"><i class="fas fa-chart-line"></i> Evaluation</a>
+                <a class="nav-link" href="#methods"><i class="fas fa-layer-group"></i> Methods</a>
+                <a class="nav-link" href="#contributors"><i class="fas fa-users"></i> Contributors</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <section class="hero" id="home">
+                <div class="hero-inner">
+                    <div class="eyebrow"><i class="fas fa-graduation-cap"></i> Exercise Recommendation Benchmark</div>
+                    <h1>
+                        UniER
+                        <span class="hero-title-tail">A Unified Benchmark for<br>Item-level and Path-level<br>Exercise Recommendation</span>
+                    </h1>
+                    <p class="hero-copy">
+                        UniER evaluates personalized exercise recommendation under one framework by aligning item-level recommendation and path-level learning path generation with Weighted Cognitive Gain.
+                    </p>
+                    <div class="hero-actions">
+                        <a class="button" href="https://arxiv.org/abs/2605.16750" target="_blank" rel="noopener"><i class="fas fa-file-lines"></i> Paper</a>
+                        <a class="button" href="https://anonymous.4open.science/r/UniER-4532/" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> Code and Data</a>
+                    </div>
+                    <div class="stat-strip" aria-label="Benchmark facts">
+                        <div class="stat-pill"><strong>9</strong><span>public datasets</span></div>
+                        <div class="stat-pill"><strong>18</strong><span>representative methods</span></div>
+                        <div class="stat-pill"><strong>4</strong><span>generation families</span></div>
+                        <div class="stat-pill"><strong>2</strong><span>WCG task settings</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="overview">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <h2 class="section-title">Overview</h2>
+                        <p class="section-lede">
+                            UniER studies personalized exercise recommendation across two paradigms: ILER, which focuses on immediate item-level recommendation, and PLER, which constructs coherent learning paths. The benchmark addresses the lack of unified evaluation for fair cross-paradigm comparison.
+                        </p>
+                    </div>
+                    <div class="grid two">
+                        <div class="panel">
+                            <h3><i class="fas fa-triangle-exclamation"></i> Evaluation Gap</h3>
+                            <p>
+                                ILER and PLER have shared educational goals but historically rely on incompatible metrics, datasets, and experimental settings. This makes cross-method and cross-paradigm comparison difficult.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3><i class="fas fa-bridge"></i> UniER Contribution</h3>
+                            <p>
+                                UniER introduces Weighted Cognitive Gain and a unified experimental setting to compare ILER and PLER methods across effectiveness, generalizability, robustness, and efficiency.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="framework-image">
+                        <img src="./Claw/images/benchmark_framework.png" alt="Overview of the UniER benchmark framework">
+                    </div>
+                    <div class="grid four" style="margin-top: 1rem;">
+                        <div class="panel">
+                            <h4><i class="fas fa-bullseye"></i> RQ1</h4>
+                            <p>How do ILER and PLER perform under the unified WCG metric?</p>
+                        </div>
+                        <div class="panel">
+                            <h4><i class="fas fa-seedling"></i> RQ2</h4>
+                            <p>How does performance degrade under data sparsity and cold-start?</p>
+                        </div>
+                        <div class="panel">
+                            <h4><i class="fas fa-shield-halved"></i> RQ3</h4>
+                            <p>How robust are representative models against underlying label noise?</p>
+                        </div>
+                        <div class="panel">
+                            <h4><i class="fas fa-gauge-high"></i> RQ4</h4>
+                            <p>What is the trade-off between computational cost and pedagogical performance?</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section alt" id="paradigms">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <h2 class="section-title">Paradigms</h2>
+                        <p class="section-lede">
+                            UniER brings two exercise recommendation paradigms into a shared output space: every evaluated method is represented as an ordered learning path under a cognitive budget of N steps.
+                        </p>
+                    </div>
+                    <div class="grid two">
+                        <div class="panel">
+                            <h3><i class="fas fa-list-check"></i> Item-Level Exercise Recommendation</h3>
+                            <p>
+                                ILER recommends a Top-K set of exercises for a student's immediate cognitive needs. End-to-end methods directly map unmastered knowledge concepts to exercises, while two-stage methods separate candidate retrieval from diversified re-ranking.
+                            </p>
+                            <div class="tag-list">
+                                <span class="tag">End-to-end</span>
+                                <span class="tag">Two-stage</span>
+                            <span class="tag">Unordered exercise set</span>
+                            </div>
+                        </div>
+                        <div class="panel">
+                            <h3><i class="fas fa-route"></i> Path-Level Exercise Recommendation</h3>
+                            <p>
+                                PLER generates an ordered exercise sequence toward pedagogical goals. Full-path methods generate the whole path at once, while step-by-step methods use sequential decisions, often with reinforcement learning.
+                            </p>
+                            <div class="tag-list">
+                                <span class="tag">Full-path</span>
+                                <span class="tag">Step-by-step</span>
+                                <span class="tag">Ordered learning path</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel callout" style="margin-top: 1rem;">
+                        <h3><i class="fas fa-arrows-turn-to-dots"></i> Unified Output</h3>
+                        <p>
+                            To compare the paradigms fairly, UniER projects ILER outputs into sequential learning paths by sorting the recommended exercises in descending order of predicted recommendation scores. PLER outputs are already ordered paths.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="datasets">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <h2 class="section-title">Datasets</h2>
+                        <p class="section-lede">
+                            UniER evaluates nine widely recognized educational datasets spanning different domains, scales, and knowledge concept structures.
+                        </p>
+                    </div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Dataset</th>
+                                    <th>#Interactions</th>
+                                    <th>#Students</th>
+                                    <th>#Exercises</th>
+                                    <th>#KC</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ASSISTments2009</td>
+                                    <td>346,860</td>
+                                    <td>4,217</td>
+                                    <td>26,688</td>
+                                    <td>123</td>
+                                    <td>Knowledge-tracing data from the ASSISTments online tutoring platform.</td>
+                                </tr>
+                                <tr>
+                                    <td>ASSISTments2012</td>
+                                    <td>6,123,270</td>
+                                    <td>46,674</td>
+                                    <td>179,999</td>
+                                    <td>265</td>
+                                    <td>ASSISTments data from a different school year than the 2009 release.</td>
+                                </tr>
+                                <tr>
+                                    <td>ASSISTments2017</td>
+                                    <td>942,816</td>
+                                    <td>686</td>
+                                    <td>3,162</td>
+                                    <td>102</td>
+                                    <td>Subset from the ASSISTments Data Mining Competition.</td>
+                                </tr>
+                                <tr>
+                                    <td>Algebra2005</td>
+                                    <td>813,661</td>
+                                    <td>575</td>
+                                    <td>1,084</td>
+                                    <td>112</td>
+                                    <td>KDD Cup 2010 algebra logs with knowledge concept annotations.</td>
+                                </tr>
+                                <tr>
+                                    <td>Bridge2006</td>
+                                    <td>3,686,871</td>
+                                    <td>1,146</td>
+                                    <td>19,258</td>
+                                    <td>493</td>
+                                    <td>KDD Cup 2010 bridge-to-algebra logs with long-term interaction volume.</td>
+                                </tr>
+                                <tr>
+                                    <td>NIPS34</td>
+                                    <td>1,382,727</td>
+                                    <td>4,918</td>
+                                    <td>948</td>
+                                    <td>57</td>
+                                    <td>NeurIPS 2020 Education Challenge diagnostic math questions with skill labels.</td>
+                                </tr>
+                                <tr>
+                                    <td>Junyi</td>
+                                    <td>25,925,992</td>
+                                    <td>247,606</td>
+                                    <td>722</td>
+                                    <td>41</td>
+                                    <td>Student problem-solving logs, exercise metadata, and annotated exercise relations.</td>
+                                </tr>
+                                <tr>
+                                    <td>Ednet</td>
+                                    <td>95,293,926</td>
+                                    <td>784,309</td>
+                                    <td>13,169</td>
+                                    <td>188</td>
+                                    <td>Large-scale Santa AI tutoring data with diverse student activities over more than two years.</td>
+                                </tr>
+                                <tr>
+                                    <td>XES3G5M</td>
+                                    <td>5,549,635</td>
+                                    <td>18,066</td>
+                                    <td>7,652</td>
+                                    <td>865</td>
+                                    <td>Real-world K-12 online math learning data with auxiliary metadata and hierarchical KCs.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section alt" id="evaluation">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <h2 class="section-title">Evaluation</h2>
+                        <p class="section-lede">
+                            Weighted Cognitive Gain is the primary metric in UniER. It measures expected weighted improvement in knowledge mastery before and after executing a generated learning path.
+                        </p>
+                    </div>
+                    <div class="grid two">
+                        <div class="panel">
+                            <h3><i class="fas fa-weight-scale"></i> Weighted Cognitive Gain</h3>
+                            <p>
+                                WCG uses a task-specific target weight distribution over knowledge concepts. The normalized weight vector lets the same metric express different pedagogical goals.
+                            </p>
+                            <div class="formula">WCG(T<sub>unified</sub> | w) = &sum;<sub>c&isin;C</sub> w<sub>c</sub> &middot; (M<sub>KT</sub><sup>(c)</sup>(H<sub>s,t</sub> &oplus; Sim(T<sub>unified</sub>)) - M<sub>KT</sub><sup>(c)</sup>(H<sub>s,t</sub>))</div>
+                            <p class="small">
+                                Here, H<sub>s,t</sub> is the student's interaction history, Sim(T<sub>unified</sub>) is the simulated response sequence after executing the path, M<sub>KT</sub><sup>(c)</sup> estimates mastery of concept c, and w<sub>c</sub> controls the task-specific importance of that concept.
+                            </p>
+                        </div>
+                        <div class="panel">
+                            <h3><i class="fas fa-sliders"></i> Two WCG Settings</h3>
+                            <p>
+                                <strong>TGA</strong> evaluates targeted goal achievement by weighting a specific target concept set.
+                            </p>
+                            <p>
+                                <strong>GPP</strong> evaluates global proficiency promotion by weighting all concepts the student has not yet mastered.
+                            </p>
+                            <div class="tag-list">
+                                <span class="tag">TGA@10</span>
+                                <span class="tag">GPP@10</span>
+                                <span class="tag">TGA@5/@20</span>
+                                <span class="tag">GPP@5/@20</span>
+                            </div>
+                        </div>
+                    </div>
+                    <h3 style="margin: 2rem 0 1rem; font-size: 1.25rem;">Additional Metrics Considered in UniER</h3>
+                    <div class="metric-list">
+                        <div class="metric-item"><strong>NDCG</strong><span>Position-aware ranking quality.</span></div>
+                        <div class="metric-item"><strong>F1-score</strong><span>Balance of precision and coverage for cognitive deficits.</span></div>
+                        <div class="metric-item"><strong>Recall</strong><span>Coverage of unmastered knowledge concepts.</span></div>
+                        <div class="metric-item"><strong>MRR</strong><span>First occurrence position of a weak KC.</span></div>
+                        <div class="metric-item"><strong>Novelty</strong><span>Ability to recommend less familiar exercises or KCs.</span></div>
+                        <div class="metric-item"><strong>Proximity</strong><span>Difficulty match between exercises and student level.</span></div>
+                        <div class="metric-item"><strong>Volatility</strong><span>Difficulty fluctuation between consecutive exercises.</span></div>
+                        <div class="metric-item"><strong>Accuracy</strong><span>Appropriateness of recommended exercise difficulty.</span></div>
+                        <div class="metric-item"><strong>MAP</strong><span>Ranking accuracy across weak KCs.</span></div>
+                        <div class="metric-item"><strong>Diversity</strong><span>Dissimilarity across recommended exercises.</span></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="methods">
+                <div class="section-inner">
+                    <div class="section-heading stacked">
+                        <h2 class="section-title">Methods</h2>
+                        <p class="section-lede">
+                            UniER benchmarks 18 representative methods across four generation families.
+                        </p>
+                    </div>
+                    <div class="grid four">
+                        <div class="panel">
+                            <h3><i class="fas fa-forward-step"></i> End-to-end ILER</h3>
+                            <p>Direct recommendation from diagnosed student state or unmastered concepts.</p>
+                            <div class="tag-list">
+                                <a class="tag" href="./Claw/model_frameworks.html#drer">DRER</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#aktrec">AKTRec</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#simplektrec">SimpleKTRec</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#mmer">MMER</a>
+                            </div>
+                            <p style="margin-top: 0.9rem;"><a href="./Claw/model_frameworks.html#end-to-end">Open family details</a></p>
+                        </div>
+                        <div class="panel">
+                            <h3><i class="fas fa-filter-circle-dollar"></i> Two-stage ILER</h3>
+                            <p>Candidate retrieval followed by filtering, re-ranking, or diversity optimization.</p>
+                            <div class="tag-list">
+                                <a class="tag" href="./Claw/model_frameworks.html#kcper">KCP-ER</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#kg4ex">KG4Ex</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#muloer">MulOER</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#ertga">ER-TGA</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#nr4der">NR4DER</a>
+                            </div>
+                            <p style="margin-top: 0.9rem;"><a href="./Claw/model_frameworks.html#two-stage">Open family details</a></p>
+                        </div>
+                        <div class="panel">
+                            <h3><i class="fas fa-angles-right"></i> Full-path PLER</h3>
+                            <p>Encoder-decoder generation of the entire learning path in a single step.</p>
+                            <div class="tag-list">
+                                <a class="tag" href="./Claw/model_frameworks.html#src">SRC</a>
+                            </div>
+                            <p style="margin-top: 0.9rem;"><a href="./Claw/model_frameworks.html#full-path">Open family details</a></p>
+                        </div>
+                        <div class="panel">
+                            <h3><i class="fas fa-person-walking-arrow-loop-left"></i> Step-by-step PLER</h3>
+                            <p>Sequential learning path generation through dynamic decisions and feedback.</p>
+                            <div class="tag-list">
+                                <a class="tag" href="./Claw/model_frameworks.html#ac">AC</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#dqn">DQN</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#cseal">CSEAL</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#rltutor">RLTutor</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#gehrl">GEHRL</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#dlpr">DLPR</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#pksd">PKSD</a>
+                                <a class="tag" href="./Claw/model_frameworks.html#knowlp">KnowLP</a>
+                            </div>
+                            <p style="margin-top: 0.9rem;"><a href="./Claw/model_frameworks.html#step-by-step">Open family details</a></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section" id="contributors">
+                <div class="section-inner">
+                    <div class="section-heading">
+                        <h2 class="section-title">Contributors</h2>
+                    </div>
+                    <div class="people-group">
+                        <h3>Mentors</h3>
+                        <div class="people-grid three">
+                            <div class="person-card">
+                                <div class="person-photo photo-quanlong" role="img" aria-label="Quanlong Guan"></div>
+                                <div class="person-name"><a href="https://scholar.google.com/citations?user=v4JiSqsAAAAJ&hl=zh-CN" target="_blank" rel="noopener">Quanlong Guan</a></div>
+                                <div class="person-note">JNU Professor</div>
+                            </div>
+                            <div class="person-card">
+                                <div class="person-photo photo-shirui" role="img" aria-label="Shirui Pan"></div>
+                                <div class="person-name"><a href="https://scholar.google.com.au/citations?user=frWRJN4AAAAJ&hl=en" target="_blank" rel="noopener">Shirui Pan</a></div>
+                                <div class="person-note">Griffith University Professor</div>
+                            </div>
+                            <div class="person-card">
+                                <div class="person-photo photo-liangda" role="img" aria-label="Liangda Fang"></div>
+                                <div class="person-name"><a href="https://scholar.google.com/citations?user=LUg-w2sAAAAJ&hl=zh-CN" target="_blank" rel="noopener">Liangda Fang</a></div>
+                                <div class="person-note">JNU Associate Professor</div>
+                            </div>
+                        </div>
+                        <div class="people-grid two">
+                            <div class="person-card">
+                                <div class="person-photo photo-jiapu" role="img" aria-label="Jiapu Wang"></div>
+                                <div class="person-name"><a href="https://scholar.google.com/citations?user=k8YPCRgAAAAJ&hl=zh-CN" target="_blank" rel="noopener">Jiapu Wang</a></div>
+                                <div class="person-note">NJUST Associate Professor</div>
+                            </div>
+                            <div class="person-card">
+                                <div class="person-photo photo-yixin" role="img" aria-label="Yixin Liu"></div>
+                                <div class="person-name"><a href="https://scholar.google.com/citations?user=auBZ-HsAAAAJ&hl=en" target="_blank" rel="noopener">Yixin Liu</a></div>
+                                <div class="person-note">Griffith University Lecturer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="people-group">
+                        <h3>Graduate Students</h3>
+                        <div class="people-grid three">
+                            <div class="person-card">
+                                <div class="person-photo photo-xinghe" role="img" aria-label="Xinghe Cheng"></div>
+                                <div class="person-name"><a href="https://scholar.google.com.hk/citations?user=BGfLNkUAAAAJ&hl=zh-CN" target="_blank" rel="noopener">Xinghe Cheng</a></div>
+                                <div class="person-note">PhD Student @ JNU (09/2023-)</div>
+                            </div>
+                            <div class="person-card">
+                                <div class="person-photo photo-guiyong" role="img" aria-label="Guiyong Zhuang"></div>
+                                <div class="person-name">Guiyong Zhuang</div>
+                                <div class="person-note">MS Student @ JNU<br>(09/2025-)</div>
+                            </div>
+                            <div class="person-card">
+                                <div class="person-photo photo-yusheng" role="img" aria-label="Yusheng Xie"></div>
+                                <div class="person-name"><a href="https://scholar.google.com/citations?user=lO9p0D4AAAAJ&hl=zh-CN" target="_blank" rel="noopener">Yusheng Xie</a></div>
+                                <div class="person-note">MS Student @ JNU<br>(09/2025-)</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="people-group">
+                        <h3>Undergraduate Students</h3>
+                        <div class="people-grid two">
+                            <div class="person-card">
+                                <div class="person-placeholder" aria-label="Danni Wang">DW</div>
+                                <div class="person-name">Danni Wang</div>
+                                <div class="person-note">Undergrad Student @ JNU (09/2023-)</div>
+                            </div>
+                            <div class="person-card">
+                                <div class="person-placeholder" aria-label="Longhui Jiang">LJ</div>
+                                <div class="person-name">Longhui Jiang</div>
+                                <div class="person-note">Undergrad Student @ JNU (09/2024-)</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <script>
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const sidebar = document.getElementById("sidebar");
+        const navLinks = Array.from(document.querySelectorAll(".nav-link"));
+        const sections = Array.from(document.querySelectorAll("section[id]"));
+
+        mobileMenuBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+        });
+
+        navLinks.forEach((link) => {
+            link.addEventListener("click", () => {
+                sidebar.classList.remove("active");
+            });
+        });
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                const id = entry.target.getAttribute("id");
+                navLinks.forEach((link) => {
+                    link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+                });
+            });
+        }, { rootMargin: "-40% 0px -50% 0px", threshold: 0 });
+
+        sections.forEach((section) => observer.observe(section));
+    </script>
+</body>
+</html>

@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Frameworks | UniER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #ffffff;
+            --surface: #f6f8fb;
+            --sidebar: #f1f4f7;
+            --text: #172033;
+            --muted: #5f6e83;
+            --line: #dbe3ec;
+            --blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --teal: #0f766e;
+            --amber: #b45309;
+            --green: #15803d;
+            --radius: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--surface);
+            color: var(--text);
+            font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+            line-height: 1.6;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.96);
+            padding: 1rem 2rem;
+        }
+
+        .back-link,
+        .top-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--blue);
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .header h1 {
+            font-size: 1.25rem;
+        }
+
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 66px);
+        }
+
+        .sidebar {
+            position: sticky;
+            top: 66px;
+            width: 300px;
+            height: calc(100vh - 66px);
+            overflow-y: auto;
+            border-right: 1px solid var(--line);
+            background: var(--sidebar);
+            padding: 1.25rem;
+        }
+
+        .sidebar-title {
+            margin: 1rem 0 0.55rem;
+            color: var(--blue);
+            font-size: 0.76rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .nav-link {
+            display: block;
+            border-radius: var(--radius);
+            color: var(--muted);
+            font-size: 0.92rem;
+            font-weight: 700;
+            padding: 0.55rem 0.7rem;
+            text-decoration: none;
+        }
+
+        .nav-link:hover {
+            background: #dbeafe;
+            color: var(--blue-dark);
+        }
+
+        .content {
+            flex: 1;
+            background: var(--bg);
+            padding: 3rem;
+        }
+
+        .hero {
+            max-width: 1120px;
+            margin-bottom: 2.5rem;
+        }
+
+        .eyebrow {
+            color: var(--teal);
+            font-size: 0.82rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .hero h2 {
+            margin-top: 0.5rem;
+            color: var(--text);
+            font-size: clamp(2.2rem, 5vw, 4rem);
+            line-height: 1.05;
+        }
+
+        .hero p {
+            max-width: 820px;
+            margin-top: 1rem;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        .family-section {
+            max-width: 1120px;
+            margin-bottom: 3.5rem;
+            scroll-margin-top: 88px;
+        }
+
+        .family-heading {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--line);
+            padding-bottom: 1rem;
+        }
+
+        .family-heading h3 {
+            color: var(--text);
+            font-size: 1.9rem;
+        }
+
+        .family-heading p {
+            max-width: 620px;
+            color: var(--muted);
+        }
+
+        .model-card {
+            scroll-margin-top: 88px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            margin-bottom: 1rem;
+            padding: 1.4rem;
+            box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+        }
+
+        .model-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 0.9rem;
+        }
+
+        .model-title {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            color: var(--text);
+            font-size: 1.35rem;
+        }
+
+        .model-title i {
+            color: var(--blue);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            border: 1px solid #bfdbfe;
+            border-radius: 999px;
+            background: #dbeafe;
+            color: var(--blue-dark);
+            font-size: 0.78rem;
+            font-weight: 900;
+            padding: 0.28rem 0.65rem;
+            white-space: nowrap;
+        }
+
+        .model-intro {
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .paper-link {
+            color: var(--muted);
+            font-size: 0.94rem;
+            line-height: 1.55;
+            margin: 0.2rem 0 1rem;
+        }
+
+        .paper-link a {
+            color: var(--blue-dark);
+            font-weight: 900;
+            text-decoration: none;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.28);
+        }
+
+        .paper-link a:hover {
+            color: var(--blue);
+            border-color: var(--blue);
+        }
+
+        .paper-link i {
+            margin-right: 0.35rem;
+        }
+
+        .module-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .module {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--surface);
+            padding: 0.9rem;
+        }
+
+        .module strong {
+            display: block;
+            color: var(--text);
+            margin-bottom: 0.3rem;
+        }
+
+        .module span {
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .framework-image {
+            margin-top: 1rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: var(--surface);
+            padding: 1rem;
+        }
+
+        .framework-image img {
+            display: block;
+            width: 100%;
+            max-width: 960px;
+            height: auto;
+            border-radius: 6px;
+        }
+
+        @media (max-width: 980px) {
+            .layout {
+                display: block;
+            }
+
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+            }
+
+            .content {
+                padding: 1.2rem;
+            }
+
+            .family-heading,
+            .model-top {
+                display: block;
+            }
+
+            .badge {
+                margin-top: 0.6rem;
+            }
+
+            .module-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a class="back-link" href="../index.html#methods"><i class="fas fa-arrow-left"></i> Back to Methods</a>
+        <h1>UniER Model Frameworks</h1>
+        <a class="top-link" href="#top"><i class="fas fa-arrow-up"></i> Top</a>
+    </header>
+
+    <div class="layout" id="top">
+        <aside class="sidebar">
+            <div class="sidebar-title">End-to-end ILER</div>
+            <a class="nav-link" href="#drer">DRER</a>
+            <a class="nav-link" href="#aktrec">AKTRec</a>
+            <a class="nav-link" href="#simplektrec">SimpleKTRec</a>
+            <a class="nav-link" href="#mmer">MMER</a>
+
+            <div class="sidebar-title">Two-stage ILER</div>
+            <a class="nav-link" href="#kcper">KCP-ER</a>
+            <a class="nav-link" href="#kg4ex">KG4Ex</a>
+            <a class="nav-link" href="#muloer">MulOER</a>
+            <a class="nav-link" href="#ertga">ER-TGA</a>
+            <a class="nav-link" href="#nr4der">NR4DER</a>
+
+            <div class="sidebar-title">Full-path PLER</div>
+            <a class="nav-link" href="#src">SRC</a>
+
+            <div class="sidebar-title">Step-by-step PLER</div>
+            <a class="nav-link" href="#ac">AC</a>
+            <a class="nav-link" href="#dqn">DQN</a>
+            <a class="nav-link" href="#cseal">CSEAL</a>
+            <a class="nav-link" href="#rltutor">RLTutor</a>
+            <a class="nav-link" href="#gehrl">GEHRL</a>
+            <a class="nav-link" href="#dlpr">DLPR</a>
+            <a class="nav-link" href="#pksd">PKSD</a>
+            <a class="nav-link" href="#knowlp">KnowLP</a>
+        </aside>
+
+        <main class="content">
+            <section class="hero">
+                <div class="eyebrow"><i class="fas fa-layer-group"></i> Method Details</div>
+                <h2>Model Frameworks by Generation Family</h2>
+                <p>
+                    The models are grouped according to UniER's benchmark taxonomy: end-to-end ILER, two-stage ILER, full-path PLER, and step-by-step PLER.
+                </p>
+            </section>
+
+            <section class="family-section" id="end-to-end">
+                <div class="family-heading">
+                    <h3>End-to-end ILER</h3>
+                    <p>End-to-end ILER methods directly map diagnosed student state or unmastered concepts into exercise recommendations.</p>
+                </div>
+
+                <article class="model-card" id="drer">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-brain"></i> DRER</h4>
+                        <span class="badge">End-to-end ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        DRER is a deep reinforcement learning framework for adaptive exercise recommendation. It uses Exercise Q-Networks to capture students' exercising states and histories, and optimizes multi-objective rewards.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>State Modeling</strong><span>Represents exercising states and historical interaction signals.</span></div>
+                        <div class="module"><strong>Exercise Q-Network</strong><span>Scores candidate exercises through a reinforcement learning formulation.</span></div>
+                        <div class="module"><strong>Multi-objective Reward</strong><span>Jointly considers review and exploration, smoothness, and engagement.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/DRE.png" alt="DRER model framework"></div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3357384.3357995" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Exploring Multi-Objective Exercise Recommendations in Online Education Systems</a></p>
+                </article>
+
+                <article class="model-card" id="aktrec">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-chart-line"></i> AKTRec</h4>
+                        <span class="badge">End-to-end ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        AKTRec adapts the AKT knowledge tracing model for exercise recommendation. AKT uses self-attentive encoders and a monotonic attention mechanism to model past exercise history; AKTRec then identifies unmastered knowledge concepts and recommends exercises covering these gaps.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Attentive KT Encoder</strong><span>Models the student's historical interactions with attention.</span></div>
+                        <div class="module"><strong>Knowledge Gap Diagnosis</strong><span>Finds knowledge concepts that remain insufficiently mastered.</span></div>
+                        <div class="module"><strong>Exercise Retrieval</strong><span>Maps weak concepts to corresponding exercises.</span></div>
+                    </div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3394486.3403282" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Context-Aware Attentive Knowledge Tracing</a></p>
+                </article>
+
+                <article class="model-card" id="simplektrec">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-stream"></i> SimpleKTRec</h4>
+                        <span class="badge">End-to-end ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        SimpleKTRec adapts SimpleKT, a lightweight attention-based knowledge tracing framework. It combines exercise embeddings with their associated knowledge concepts and uses dot-product attention to extract temporal knowledge states for recommendation.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Concept-aware Embedding</strong><span>Represents exercises through their related knowledge concepts.</span></div>
+                        <div class="module"><strong>Temporal Attention</strong><span>Extracts evolving knowledge states efficiently.</span></div>
+                        <div class="module"><strong>Gap-based Recommendation</strong><span>Recommends exercises linked to unmastered concepts.</span></div>
+                    </div>
+                    <p class="paper-link"><a href="https://openreview.net/forum?id=9HiGqC9C-KA" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: simpleKT: A Simple But Tough-To-Beat Baseline for Knowledge Tracing</a></p>
+                </article>
+
+                <article class="model-card" id="mmer">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-users-gear"></i> MMER</h4>
+                        <span class="badge">End-to-end ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        MMER is a meta multi-agent reinforcement learning framework for exercise recommendation. Each knowledge concept is treated as an agent, enabling cooperative and competitive interactions among concepts and adaptation to new student groups.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Concept Agents</strong><span>Models each KC as an agent in a multi-agent setting.</span></div>
+                        <div class="module"><strong>Meta-training</strong><span>Supports quick adaptation with few-shot student data.</span></div>
+                        <div class="module"><strong>Recommendation Policy</strong><span>Coordinates KC-level signals to select exercises.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/MMER.png" alt="MMER model framework"></div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3580305.3599429" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Meta Multi-Agent Exercise Recommendation: A Game Application Perspective</a></p>
+                </article>
+            </section>
+
+            <section class="family-section" id="two-stage">
+                <div class="family-heading">
+                    <h3>Two-stage ILER</h3>
+                    <p>Two-stage ILER methods separate candidate generation from filtering, re-ranking, or set-level optimization.</p>
+                </div>
+
+                <article class="model-card" id="kcper">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-filter"></i> KCP-ER</h4>
+                        <span class="badge">Two-stage ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        KCP-ER uses a Knowledge Concept Prediction Layer and an Exercise Set Filtering Layer. It predicts concept coverage and mastery, filters suitable exercises, and generates a diversified recommendation list.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>KC Prediction</strong><span>Predicts coverage and mastery of knowledge concepts.</span></div>
+                        <div class="module"><strong>Exercise Filtering</strong><span>Selects exercises by difficulty and novelty constraints.</span></div>
+                        <div class="module"><strong>List Generation</strong><span>Uses simulated annealing to improve diversity.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/KCP-ER.png" alt="KCP-ER model framework"></div>
+                    <p class="paper-link"><a href="https://doi.org/10.1016/j.knosys.2020.106481" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Exercise Recommendation Based on Knowledge Concept Prediction</a></p>
+                </article>
+
+                <article class="model-card" id="kg4ex">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-project-diagram"></i> KG4Ex</h4>
+                        <span class="badge">Two-stage ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        KG4Ex is a two-stage exercise recommendation method with feature extraction and knowledge graph-based recommendation. It learns relationships among students, exercises, and knowledge concepts to produce explainable recommendations.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Feature Extraction</strong><span>Computes mastery, future concept probability, and forgetting-related signals.</span></div>
+                        <div class="module"><strong>Knowledge Graph</strong><span>Builds structured relations among students, exercises, and KCs.</span></div>
+                        <div class="module"><strong>Explainable Ranking</strong><span>Uses graph embeddings to recommend exercises with reasons.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/KG4Ex.png" alt="KG4Ex model framework"></div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3583780.3614943" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: KG4Ex: An Explainable Knowledge Graph-Based Approach for Exercise Recommendation</a></p>
+                </article>
+
+                <article class="model-card" id="muloer">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-layer-group"></i> MulOER</h4>
+                        <span class="badge">Two-stage ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        MulOER-SAN adopts a two-layer multi-objective framework. The bottom layer traces mastery and predicts concept coverage with self-attention, while the top layer filters candidate exercises and optimizes diversity with smooth difficulty progression.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Self-attention Layer</strong><span>Predicts KC coverage and traces student mastery.</span></div>
+                        <div class="module"><strong>Candidate Filtering</strong><span>Constructs a candidate subset for recommendation.</span></div>
+                        <div class="module"><strong>Multi-objective Search</strong><span>Optimizes diversity while controlling difficulty smoothness.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/MulSUN-OER.png" alt="MulOER model framework"></div>
+                    <p class="paper-link"><a href="https://doi.org/10.1016/j.knosys.2022.110117" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: MulOER-SAN: 2-Layer Multi-Objective Framework for Exercise Recommendation with Self-Attention Networks</a></p>
+                </article>
+
+                <article class="model-card" id="ertga">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-dna"></i> ER-TGA</h4>
+                        <span class="badge">Two-stage ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        ER-TGA combines cognitive diagnosis with a tribal-alliance genetic algorithm. It identifies weak knowledge components, builds candidate exercises, and selects an exercise subset by minimizing multi-objective recommendation cost.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Cognitive Diagnosis</strong><span>Identifies weak knowledge components and supports cold-start scenarios.</span></div>
+                        <div class="module"><strong>Candidate Exercise Set</strong><span>Builds candidate exercises aligned with knowledge gaps.</span></div>
+                        <div class="module"><strong>TGA Optimization</strong><span>Balances accuracy, novelty, diversity, proximity, coverage, quantity, and volatility.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/ER-TGA.png" alt="ER-TGA model framework"></div>
+                    <p class="paper-link"><a href="https://doi.org/10.1016/j.ipm.2024.104051" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Comprehensive Exercise Recommendation with Practicality, Generalizability, and Versatility in AI-Driven Education</a></p>
+                </article>
+
+                <article class="model-card" id="nr4der">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-sort-amount-up"></i> NR4DER</h4>
+                        <span class="badge">Two-stage ILER</span>
+                    </div>
+                    <p class="model-intro">
+                        NR4DER contains an exercise filter module and a neural re-ranking module. It predicts mastery, builds suitable candidates, enhances inactive student representations, and re-ranks exercises for relevance and diversity.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Exercise Filter</strong><span>Predicts mastery and constructs difficulty-appropriate candidates.</span></div>
+                        <div class="module"><strong>Student Enhancer</strong><span>Improves representation for inactive students.</span></div>
+                        <div class="module"><strong>Neural Re-ranking</strong><span>Integrates relevance and learning pattern diversity.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/NR4DER.png" alt="NR4DER model framework"></div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3726302.3730046" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: NR4DER: Neural Re-ranking for Diversified Exercise Recommendation</a></p>
+                </article>
+            </section>
+
+            <section class="family-section" id="full-path">
+                <div class="family-heading">
+                    <h3>Full-path PLER</h3>
+                    <p>Full-path PLER generates the complete learning path in one step, typically with encoder-decoder style generation.</p>
+                </div>
+
+                <article class="model-card" id="src">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-route"></i> SRC</h4>
+                        <span class="badge">Full-path PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        SRC formulates learning path recommendation as a set-to-sequence task. A concept-aware encoder captures correlations among candidate learning concepts, and an attention-based decoder sequentially generates the learning path.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Concept-aware Encoder</strong><span>Captures relations among candidate concepts.</span></div>
+                        <div class="module"><strong>Attention Decoder</strong><span>Generates the full learning path sequence.</span></div>
+                        <div class="module"><strong>KT Auxiliary Module</strong><span>Predicts mastery at each step to stabilize training.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/SRC.png" alt="SRC model framework"></div>
+                    <p class="paper-link"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/25630" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Set-to-Sequence Ranking-Based Concept-Aware Learning Path Recommendation</a></p>
+                </article>
+            </section>
+
+            <section class="family-section" id="step-by-step">
+                <div class="family-heading">
+                    <h3>Step-by-step PLER</h3>
+                    <p>Step-by-step PLER treats learning path generation as sequential decision-making and updates decisions along the path.</p>
+                </div>
+
+                <article class="model-card" id="ac">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-robot"></i> AC</h4>
+                        <span class="badge">Step-by-step PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        AC applies the classical Actor-Critic framework to step-by-step learning path recommendation. The critic estimates the value of the current student state, and the actor selects the next exercise to optimize learning outcomes.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Actor</strong><span>Selects the next exercise according to the current policy.</span></div>
+                        <div class="module"><strong>Critic</strong><span>Estimates expected value for the current student state.</span></div>
+                        <div class="module"><strong>TD Update</strong><span>Uses temporal-difference learning to update policy and value estimates.</span></div>
+                    </div>
+                    <p class="paper-link"><a href="https://papers.nips.cc/paper/1786-actor-critic-algorithms" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Actor-Critic Algorithms</a></p>
+                </article>
+
+                <article class="model-card" id="dqn">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-network-wired"></i> DQN</h4>
+                        <span class="badge">Step-by-step PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        DQN adapts Deep Q-Network style reinforcement learning to step-by-step recommendation. The agent estimates action values for possible next exercises and updates them through Q-learning with experience replay.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>State Observation</strong><span>Represents the current learning state before choosing the next action.</span></div>
+                        <div class="module"><strong>Q-value Estimation</strong><span>Scores candidate next exercises as actions.</span></div>
+                        <div class="module"><strong>Experience Replay</strong><span>Stabilizes off-policy updates by replaying past transitions.</span></div>
+                    </div>
+                    <p class="paper-link"><a href="https://www.nature.com/articles/nature14236" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Human-Level Control Through Deep Reinforcement Learning</a></p>
+                </article>
+
+                <article class="model-card" id="cseal">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-compass"></i> CSEAL</h4>
+                        <span class="badge">Step-by-step PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        CSEAL models learning path recommendation as a Markov Decision Process. It combines knowledge tracing, cognitive navigation, and an actor-critic recommender to generate exercises sequentially.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Knowledge Tracing</strong><span>Estimates evolving student mastery levels.</span></div>
+                        <div class="module"><strong>Cognitive Navigation</strong><span>Selects candidate items through prerequisite graph constraints.</span></div>
+                        <div class="module"><strong>Actor-Critic Recommender</strong><span>Chooses exercises while reducing search space.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/CESAL.png" alt="CSEAL model framework"></div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3292500.3330922" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Exploiting Cognitive Structure for Adaptive Learning</a></p>
+                </article>
+
+                <article class="model-card" id="rltutor">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-chalkboard-user"></i> RLTutor</h4>
+                        <span class="badge">Step-by-step PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        RLTutor models adaptive tutoring as a step-by-step sequential decision problem. An inner model estimates student knowledge state, and a PPO-based reinforcement learning agent optimizes the teaching strategy.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Inner Model</strong><span>Estimates current student knowledge state with temporal memory dynamics.</span></div>
+                        <div class="module"><strong>Virtual Student</strong><span>Supports learning policies with fewer real student interactions.</span></div>
+                        <div class="module"><strong>PPO Agent</strong><span>Optimizes the next exercise recommendation strategy.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/RL-Tutor.png" alt="RLTutor model framework"></div>
+                    <p class="paper-link"><a href="https://arxiv.org/abs/2108.00268" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: RLTutor: Reinforcement Learning Based Adaptive Tutoring System by Modeling Virtual Student with Fewer Interactions</a></p>
+                </article>
+
+                <article class="model-card" id="gehrl">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-sitemap"></i> GEHRL</h4>
+                        <span class="badge">Step-by-step PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        GEHRL uses hierarchical reinforcement learning for goal-oriented learning path recommendation. A high-level agent selects sub-goals, while a low-level agent recommends learning items to achieve each sub-goal.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>High-level Agent</strong><span>Selects sub-goals aligned with the target objective.</span></div>
+                        <div class="module"><strong>Low-level Agent</strong><span>Recommends items sequentially for each sub-goal.</span></div>
+                        <div class="module"><strong>Graph Candidate Selector</strong><span>Constrains actions to goal-related exercises.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/GEHRL.png" alt="GEHRL model framework"></div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3583780.3614897" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Graph Enhanced Hierarchical Reinforcement Learning for Goal-Oriented Learning Path Recommendation</a></p>
+                </article>
+
+                <article class="model-card" id="dlpr">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-layer-group"></i> DLPR</h4>
+                        <span class="badge">Step-by-step PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        DLPR addresses learning path recommendation as a dynamic sequential decision problem. It uses a Difficulty-driven Hierarchical Reinforcement Learning framework with an L-Agent and a P-Agent, together with knowledge state estimation.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>L-Agent</strong><span>Selects learning items at the high level.</span></div>
+                        <div class="module"><strong>P-Agent</strong><span>Chooses associated practice items at the low level.</span></div>
+                        <div class="module"><strong>DIMKT State Estimator</strong><span>Tracks evolving knowledge and difficulty signals.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/DLPR.png" alt="DLPR model framework"></div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3637528.3671947" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Item-Difficulty-Aware Learning Path Recommendation: From a Real Walking Perspective</a></p>
+                </article>
+
+                <article class="model-card" id="pksd">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-graduation-cap"></i> PKSD</h4>
+                        <span class="badge">Step-by-step PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        PKSD introduces privileged knowledge state distillation for reinforcement learning-based educational path recommendation. It uses simulator-derived knowledge state as privileged information during training and estimates latent knowledge state during inference.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Privileged State Encoder</strong><span>Learns from simulator-derived knowledge state during training.</span></div>
+                        <div class="module"><strong>Knowledge State Adapter</strong><span>Estimates latent state from regular exercise logs at inference time.</span></div>
+                        <div class="module"><strong>RL Path Agent</strong><span>Generates personalized and structured learning paths.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/PKSD.png" alt="PKSD model framework"></div>
+                    <p class="paper-link"><a href="https://dl.acm.org/doi/10.1145/3637528.3671872" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: Privileged Knowledge State Distillation for Reinforcement Learning-Based Educational Path Recommendation</a></p>
+                </article>
+
+                <article class="model-card" id="knowlp">
+                    <div class="model-top">
+                        <h4 class="model-title"><i class="fas fa-book-open"></i> KnowLP</h4>
+                        <span class="badge">Step-by-step PLER</span>
+                    </div>
+                    <p class="model-intro">
+                        KnowLP constructs personalized learning paths with step-by-step reinforcement learning guided by dual knowledge structure graphs. It uses specialized agents to address prerequisite, similarity, and difficulty factors.
+                    </p>
+                    <div class="module-grid">
+                        <div class="module"><strong>Dual Knowledge Graphs</strong><span>Capture prerequisite and similarity relations among concepts.</span></div>
+                        <div class="module"><strong>Specialized Agents</strong><span>Select concepts and exercises according to prerequisite, similarity, and difficulty signals.</span></div>
+                        <div class="module"><strong>Knowledge Tracing</strong><span>Tracks mastery and difficulty to adapt the generated path.</span></div>
+                    </div>
+                    <div class="framework-image"><img src="./images/KnowLP.png" alt="KnowLP model framework"></div>
+                    <p class="paper-link"><a href="https://ojs.aaai.org/index.php/AAAI/article/view/38479" target="_blank" rel="noopener"><i class="fas fa-up-right-from-square"></i>Original paper: GraphRAG-Induced Dual Knowledge Structure Graphs for Personalized Learning Path Recommendation</a></p>
+                </article>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
