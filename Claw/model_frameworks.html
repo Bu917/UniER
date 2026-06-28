@@ -83,11 +83,18 @@
         }
 
         .sidebar-title {
+            display: block;
             margin: 1rem 0 0.55rem;
             color: var(--blue);
             font-size: 0.76rem;
             font-weight: 900;
             text-transform: uppercase;
+            text-decoration: none;
+        }
+
+        .sidebar-title:hover {
+            color: var(--blue-dark);
+            text-decoration: underline;
         }
 
         .nav-link {
@@ -161,6 +168,73 @@
         .family-heading p {
             max-width: 620px;
             color: var(--muted);
+        }
+
+        .method-table-card {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            margin-bottom: 1.2rem;
+            overflow: hidden;
+            box-shadow: 0 8px 24px rgba(23, 32, 51, 0.05);
+        }
+
+        .method-table-title {
+            display: flex;
+            align-items: center;
+            gap: 0.55rem;
+            padding: 1rem 1.2rem;
+            border-bottom: 1px solid var(--line);
+            color: var(--text);
+            font-size: 1.05rem;
+            font-weight: 900;
+        }
+
+        .method-table-wrap {
+            overflow-x: auto;
+        }
+
+        .method-summary-table {
+            width: 100%;
+            min-width: 760px;
+            border-collapse: collapse;
+        }
+
+        .method-summary-table th,
+        .method-summary-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--line);
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.9rem;
+        }
+
+        .method-summary-table th {
+            background: #f3f7fb;
+            color: var(--text);
+            font-size: 0.78rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .method-summary-table tr:last-child td {
+            border-bottom: 0;
+        }
+
+        .method-summary-table a {
+            color: var(--blue);
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .method-summary-table a:hover {
+            text-decoration: underline;
+        }
+
+        .method-summary-table .venue {
+            white-space: nowrap;
+            color: var(--text);
+            font-weight: 700;
         }
 
         .model-card {
@@ -316,23 +390,23 @@
 
     <div class="layout" id="top">
         <aside class="sidebar">
-            <div class="sidebar-title">End-to-end ILER</div>
+            <a class="sidebar-title" href="#end-to-end">End-to-end ILER</a>
             <a class="nav-link" href="#drer">DRER</a>
             <a class="nav-link" href="#aktrec">AKTRec</a>
             <a class="nav-link" href="#simplektrec">SimpleKTRec</a>
             <a class="nav-link" href="#mmer">MMER</a>
 
-            <div class="sidebar-title">Two-stage ILER</div>
+            <a class="sidebar-title" href="#two-stage">Two-stage ILER</a>
             <a class="nav-link" href="#kcper">KCP-ER</a>
             <a class="nav-link" href="#kg4ex">KG4Ex</a>
             <a class="nav-link" href="#muloer">MulOER</a>
             <a class="nav-link" href="#ertga">ER-TGA</a>
             <a class="nav-link" href="#nr4der">NR4DER</a>
 
-            <div class="sidebar-title">Full-path PLER</div>
+            <a class="sidebar-title" href="#full-path">Full-path PLER</a>
             <a class="nav-link" href="#src">SRC</a>
 
-            <div class="sidebar-title">Step-by-step PLER</div>
+            <a class="sidebar-title" href="#step-by-step">Step-by-step PLER</a>
             <a class="nav-link" href="#ac">AC</a>
             <a class="nav-link" href="#dqn">DQN</a>
             <a class="nav-link" href="#cseal">CSEAL</a>
@@ -356,6 +430,48 @@
                 <div class="family-heading">
                     <h3>End-to-end ILER</h3>
                     <p>End-to-end ILER methods directly map diagnosed student state or unmastered concepts into exercise recommendations.</p>
+                </div>
+
+                <div class="method-table-card" aria-label="End-to-end ILER method summary">
+                    <div class="method-table-title"><i class="fas fa-table-list"></i> End-to-end ILER</div>
+                    <div class="method-table-wrap">
+                        <table class="method-summary-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Venue</th>
+                                    <th>Year</th>
+                                    <th>Basic characteristics</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#drer">DRER</a></td>
+                                    <td class="venue">CIKM</td>
+                                    <td>2019</td>
+                                    <td>Deep reinforcement learning framework that uses Exercise Q-Networks to model students' exercising states and histories, with rewards defined for Review &amp; Explore, Smoothness, and Engagement.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#aktrec">AKTRec</a></td>
+                                    <td class="venue">SIGKDD</td>
+                                    <td>2020</td>
+                                    <td>Adapts AKT's context-aware attentive knowledge tracing to identify unmastered concepts and retrieve exercises covering those gaps.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#simplektrec">SimpleKTRec</a></td>
+                                    <td class="venue">ICLR</td>
+                                    <td>2023</td>
+                                    <td>Uses a lightweight attention-based KT backbone with concept-aware exercise embeddings and dot-product attention for gap-based recommendation.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#mmer">MMER</a></td>
+                                    <td class="venue">SIGKDD</td>
+                                    <td>2023</td>
+                                    <td>Meta multi-agent reinforcement learning framework where each knowledge concept is modeled as an agent with cooperative and competitive interactions.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <article class="model-card" id="drer">
@@ -429,6 +545,54 @@
                 <div class="family-heading">
                     <h3>Two-stage ILER</h3>
                     <p>Two-stage ILER methods separate candidate generation from filtering, re-ranking, or set-level optimization.</p>
+                </div>
+
+                <div class="method-table-card" aria-label="Two-stage ILER method summary">
+                    <div class="method-table-title"><i class="fas fa-table-list"></i> Two-stage ILER</div>
+                    <div class="method-table-wrap">
+                        <table class="method-summary-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Venue</th>
+                                    <th>Year</th>
+                                    <th>Basic characteristics</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#kcper">KCP-ER</a></td>
+                                    <td class="venue">Knowledge-Based Systems</td>
+                                    <td>2020</td>
+                                    <td>Combines a Knowledge Concept Prediction Layer with an Exercise Set Filtering Layer; filters by difficulty and novelty and uses simulated annealing for diversity.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#kg4ex">KG4Ex</a></td>
+                                    <td class="venue">CIKM</td>
+                                    <td>2023</td>
+                                    <td>Extracts mastery, future concept probability, and forgetting signals, then uses knowledge graph embeddings for explainable exercise recommendation.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#muloer">MulOER</a></td>
+                                    <td class="venue">Knowledge-Based Systems</td>
+                                    <td>2023</td>
+                                    <td>Two-layer multi-objective framework using self-attention for concept coverage and mastery tracing, followed by candidate filtering and diversity optimization.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#ertga">ER-TGA</a></td>
+                                    <td class="venue">Information Processing &amp; Management</td>
+                                    <td>2025</td>
+                                    <td>Combines cognitive diagnosis with a tribal-alliance genetic algorithm to select exercises by multi-objective recommendation cost.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#nr4der">NR4DER</a></td>
+                                    <td class="venue">SIGIR</td>
+                                    <td>2025</td>
+                                    <td>Uses an exercise filter and neural re-ranking module to balance exercise relevance with learning-pattern diversity.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <article class="model-card" id="kcper">
@@ -523,6 +687,30 @@
                     <p>Full-path PLER generates the complete learning path in one step, typically with encoder-decoder style generation.</p>
                 </div>
 
+                <div class="method-table-card" aria-label="Full-path PLER method summary">
+                    <div class="method-table-title"><i class="fas fa-table-list"></i> Full-path PLER</div>
+                    <div class="method-table-wrap">
+                        <table class="method-summary-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Venue</th>
+                                    <th>Year</th>
+                                    <th>Basic characteristics</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#src">SRC</a></td>
+                                    <td class="venue">AAAI</td>
+                                    <td>2023</td>
+                                    <td>Set-to-sequence learning path recommendation with a concept-aware encoder, attention-based decoder, and KT auxiliary module.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <article class="model-card" id="src">
                     <div class="model-top">
                         <h4 class="model-title"><i class="fas fa-route"></i> SRC</h4>
@@ -545,6 +733,72 @@
                 <div class="family-heading">
                     <h3>Step-by-step PLER</h3>
                     <p>Step-by-step PLER treats learning path generation as sequential decision-making and updates decisions along the path.</p>
+                </div>
+
+                <div class="method-table-card" aria-label="Step-by-step PLER method summary">
+                    <div class="method-table-title"><i class="fas fa-table-list"></i> Step-by-step PLER</div>
+                    <div class="method-table-wrap">
+                        <table class="method-summary-table">
+                            <thead>
+                                <tr>
+                                    <th>Method</th>
+                                    <th>Venue</th>
+                                    <th>Year</th>
+                                    <th>Basic characteristics</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><a href="#ac">AC</a></td>
+                                    <td class="venue">NIPS</td>
+                                    <td>1999</td>
+                                    <td>Actor-Critic framework for sequential path generation: the critic estimates student-state value and the actor selects the next exercise.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#dqn">DQN</a></td>
+                                    <td class="venue">Nature</td>
+                                    <td>2015</td>
+                                    <td>Deep Q-Network style reinforcement learning with Q-value estimation and experience replay for step-by-step control policies.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#cseal">CSEAL</a></td>
+                                    <td class="venue">SIGKDD</td>
+                                    <td>2019</td>
+                                    <td>Models learning path recommendation as an MDP with knowledge tracing, cognitive navigation, and actor-critic recommendation.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#rltutor">RLTutor</a></td>
+                                    <td class="venue">arXiv</td>
+                                    <td>2021</td>
+                                    <td>Adaptive tutoring with an Inner Model for student knowledge state estimation and a PPO-based agent for teaching strategy optimization.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#gehrl">GEHRL</a></td>
+                                    <td class="venue">CIKM</td>
+                                    <td>2023</td>
+                                    <td>Hierarchical reinforcement learning with high-level sub-goals, low-level item recommendation, and graph-based candidate selection.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#dlpr">DLPR</a></td>
+                                    <td class="venue">SIGKDD</td>
+                                    <td>2024</td>
+                                    <td>Difficulty-driven hierarchical reinforcement learning with L-Agent, P-Agent, DIMKT state estimation, and coordinated path generation.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#pksd">PKSD</a></td>
+                                    <td class="venue">SIGKDD</td>
+                                    <td>2024</td>
+                                    <td>Privileged knowledge state distillation using simulator-derived knowledge state during training and latent state adaptation at inference.</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="#knowlp">KnowLP</a></td>
+                                    <td class="venue">AAAI</td>
+                                    <td>2026</td>
+                                    <td>Step-by-step reinforcement learning guided by dual knowledge structure graphs and specialized prerequisite, similarity, and difficulty agents.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <article class="model-card" id="ac">
