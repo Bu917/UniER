@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Updates to the UniER benchmark website and documentation.">
+    <title>Updates | UniER Benchmark</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #ffffff;
+            --surface: #f6f8fb;
+            --surface-strong: #edf3f8;
+            --sidebar: #f1f4f7;
+            --text: #172033;
+            --muted: #5f6e83;
+            --soft: #8b9aad;
+            --line: #dbe3ec;
+            --blue: #2563eb;
+            --blue-dark: #1d4ed8;
+            --teal: #0f766e;
+            --green: #15803d;
+            --shadow: 0 10px 30px rgba(23, 32, 51, 0.08);
+            --radius: 8px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a {
+            color: inherit;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            z-index: 200;
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            color: var(--blue);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+        }
+
+        .layout {
+            min-height: 100vh;
+            display: flex;
+        }
+
+        .sidebar {
+            position: fixed;
+            inset: 0 auto 0 0;
+            z-index: 100;
+            display: flex;
+            width: 280px;
+            flex-direction: column;
+            overflow-y: auto;
+            border-right: 1px solid var(--line);
+            background: var(--sidebar);
+            padding: 2rem 0;
+        }
+
+        .sidebar-header {
+            border-bottom: 1px solid var(--line);
+            padding: 0 1.6rem 1.4rem;
+        }
+
+        .logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--blue);
+            font-size: 1.7rem;
+            font-weight: 800;
+            text-decoration: none;
+        }
+
+        .logo i {
+            font-size: 1.3rem;
+        }
+
+        .sidebar-subtitle {
+            margin-top: 0.6rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav {
+            flex: 1;
+            padding: 1.5rem 1.1rem;
+        }
+
+        .nav-category {
+            margin: 0.6rem 0 0.7rem;
+            padding-left: 0.6rem;
+            color: var(--blue);
+            font-size: 0.74rem;
+            font-weight: 800;
+            letter-spacing: 0;
+            text-transform: uppercase;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.25rem;
+            padding: 0.74rem 0.9rem;
+            border-radius: var(--radius);
+            color: var(--muted);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .nav-link i {
+            width: 18px;
+            text-align: center;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #dbeafe;
+            color: var(--blue-dark);
+        }
+
+        .main {
+            width: calc(100% - 280px);
+            margin-left: 280px;
+        }
+
+        .page-hero {
+            border-bottom: 1px solid var(--line);
+            background: #f8fbff;
+        }
+
+        .page-hero-inner,
+        .updates-inner {
+            width: min(1180px, calc(100% - 4rem));
+            margin: 0 auto;
+        }
+
+        .page-hero-inner {
+            padding: 4.4rem 0 3.6rem;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            margin-bottom: 0.85rem;
+            color: var(--teal);
+            font-size: 0.86rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            color: var(--text);
+            font-size: clamp(2.5rem, 5vw, 4.25rem);
+            line-height: 1.05;
+            letter-spacing: 0;
+            font-weight: 800;
+        }
+
+        .page-lede {
+            margin-top: 1rem;
+            color: var(--muted);
+            font-size: 1.08rem;
+        }
+
+        .updates-section {
+            padding: 3.2rem 0 5rem;
+        }
+
+        .updates-layout {
+            display: grid;
+            grid-template-columns: minmax(190px, 245px) minmax(0, 1fr);
+            gap: 2.4rem;
+            align-items: start;
+        }
+
+        .archive {
+            position: sticky;
+            top: 1.5rem;
+            border-right: 1px solid var(--line);
+            padding: 0.25rem 1.35rem 0.25rem 0;
+        }
+
+        .archive-title {
+            margin-bottom: 0.85rem;
+            color: var(--text);
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .archive-link {
+            display: block;
+            margin-bottom: 0.2rem;
+            border-left: 3px solid transparent;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            padding: 0.6rem 0.75rem;
+            color: var(--muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+            line-height: 1.35;
+            text-decoration: none;
+            transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .archive-link:hover,
+        .archive-link:focus {
+            border-left-color: var(--blue);
+            background: #eff6ff;
+            color: var(--blue-dark);
+            outline: none;
+        }
+
+        .archive-date {
+            display: block;
+            margin-top: 0.18rem;
+            color: var(--soft);
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .release-list {
+            display: grid;
+            gap: 1.25rem;
+        }
+
+        .release {
+            scroll-margin-top: 1.5rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: #ffffff;
+            padding: clamp(1.35rem, 3vw, 2rem);
+            box-shadow: 0 4px 18px rgba(23, 32, 51, 0.04);
+        }
+
+        .release-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 1.1rem;
+        }
+
+        .release-title {
+            color: var(--text);
+            font-size: clamp(1.35rem, 2.5vw, 1.85rem);
+            line-height: 1.2;
+            font-weight: 800;
+        }
+
+        .release-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 0.65rem;
+            color: var(--muted);
+            font-size: 0.86rem;
+        }
+
+        .release-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            flex: 0 0 auto;
+            border: 1px solid #86efac;
+            border-radius: 999px;
+            background: #f0fdf4;
+            padding: 0.24rem 0.62rem;
+            color: var(--green);
+            font-size: 0.76rem;
+            font-weight: 800;
+        }
+
+        .release-body {
+            padding-top: 1.25rem;
+        }
+
+        .release-body p {
+            color: var(--muted);
+        }
+
+        .change-list {
+            display: grid;
+            gap: 0.7rem;
+            margin-top: 1rem;
+            list-style: none;
+        }
+
+        .change-list li {
+            position: relative;
+            padding-left: 1.35rem;
+            color: var(--text);
+            font-size: 0.96rem;
+        }
+
+        .change-list li::before {
+            position: absolute;
+            top: 0.68rem;
+            left: 0;
+            width: 0.42rem;
+            height: 0.42rem;
+            border-radius: 50%;
+            background: var(--blue);
+            content: "";
+        }
+
+        .release-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            margin-top: 1.35rem;
+        }
+
+        .release-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 0.55rem 0.75rem;
+            color: var(--blue-dark);
+            font-size: 0.86rem;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .release-link:hover {
+            border-color: var(--blue);
+            background: #eff6ff;
+        }
+
+        .release-note {
+            margin-top: 2rem;
+            border-left: 4px solid var(--blue);
+            background: #eff6ff;
+            padding: 1rem 1.1rem;
+            color: var(--muted);
+            font-size: 0.92rem;
+        }
+
+        .release-note strong {
+            color: var(--text);
+        }
+
+        @media (max-width: 900px) {
+            .mobile-menu-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.25s ease;
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main {
+                width: 100%;
+                margin-left: 0;
+            }
+
+            .page-hero-inner,
+            .updates-inner {
+                width: calc(100% - 2rem);
+                max-width: 720px;
+            }
+
+            .updates-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .archive {
+                position: static;
+                display: flex;
+                gap: 0.5rem;
+                overflow-x: auto;
+                border-right: 0;
+                border-bottom: 1px solid var(--line);
+                padding: 0 0 1rem;
+            }
+
+            .archive-title {
+                flex: 0 0 auto;
+                padding-top: 0.58rem;
+            }
+
+            .archive-link {
+                flex: 0 0 180px;
+                border: 1px solid var(--line);
+                border-radius: var(--radius);
+            }
+
+            .archive-link:hover,
+            .archive-link:focus {
+                border-color: var(--blue);
+            }
+        }
+
+        @media (max-width: 580px) {
+            .page-hero-inner {
+                padding: 5.2rem 0 2.8rem;
+            }
+
+            .release-header {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open navigation">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <div class="layout">
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="index.html#home" class="logo"><i class="fas fa-route"></i> UniER</a>
+                <p class="sidebar-subtitle">Unified benchmark for item-level and path-level exercise recommendation.</p>
+            </div>
+            <nav class="sidebar-nav" aria-label="Primary navigation">
+                <div class="nav-category">Benchmark</div>
+                <a class="nav-link" href="index.html#home"><i class="fas fa-house"></i> Home</a>
+                <a class="nav-link" href="index.html#overview"><i class="fas fa-compass"></i> Overview</a>
+                <a class="nav-link" href="index.html#paradigms"><i class="fas fa-diagram-project"></i> Paradigms</a>
+                <a class="nav-link" href="index.html#datasets"><i class="fas fa-database"></i> Datasets</a>
+                <a class="nav-link" href="index.html#evaluation"><i class="fas fa-chart-line"></i> Evaluation</a>
+                <a class="nav-link" href="index.html#methods"><i class="fas fa-layer-group"></i> Methods</a>
+                <a class="nav-link" href="index.html#contributors"><i class="fas fa-users"></i> Contributors</a>
+                <a class="nav-link active" href="updates.html" aria-current="page"><i class="fas fa-clock-rotate-left"></i> Updates</a>
+            </nav>
+        </aside>
+
+        <main class="main">
+            <header class="page-hero">
+                <div class="page-hero-inner">
+                    <p class="eyebrow"><i class="fas fa-clock-rotate-left"></i> Project record</p>
+                    <h1>Updates</h1>
+                    <p class="page-lede">A concise record of changes to the UniER benchmark website and its public documentation.</p>
+                </div>
+            </header>
+
+            <section class="updates-section">
+                <div class="updates-inner">
+                    <div class="updates-layout">
+                        <aside class="archive" aria-label="Update archive">
+                            <div class="archive-title">Update archive</div>
+                            <a class="archive-link" href="#website-launch">Website launch<span class="archive-date">Jun. 2026</span></a>
+                        </aside>
+
+                        <div>
+                            <div class="release-list">
+                                <article class="release" id="website-launch">
+                                    <div class="release-header">
+                                        <div>
+                                            <h2 class="release-title">Website launch</h2>
+                                            <div class="release-meta">
+                                                <span><i class="far fa-calendar"></i> Jun. 2026</span>
+                                                <span><i class="far fa-folder"></i> Website</span>
+                                            </div>
+                                        </div>
+                                        <span class="badge">Latest</span>
+                                    </div>
+                                    <div class="release-body">
+                                        <p>The UniER benchmark website is now publicly available.</p>
+                                        <ul class="change-list">
+                                            <li>Published the website at www.unier-benchmark.com.</li>
+                                            <li>Provided public documentation for the benchmark overview, task paradigms, datasets, evaluation, methods, and contributors.</li>
+                                            <li>Added links to the UniER paper and code repository.</li>
+                                        </ul>
+                                        <div class="release-links">
+                                            <a class="release-link" href="index.html#home"><i class="fas fa-house"></i> Visit UniER</a>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+        const sidebar = document.getElementById("sidebar");
+
+        mobileMenuBtn.addEventListener("click", () => {
+            sidebar.classList.toggle("active");
+        });
+
+        document.querySelectorAll(".nav-link").forEach((link) => {
+            link.addEventListener("click", () => {
+                sidebar.classList.remove("active");
+            });
+        });
+    </script>
+</body>
+</html>
