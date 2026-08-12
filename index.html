@@ -174,6 +174,102 @@
             padding: 4.5rem 0 5.5rem;
         }
 
+        .hero-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(310px, 350px);
+            gap: clamp(2rem, 4vw, 4.5rem);
+            align-items: center;
+        }
+
+        .home-updates {
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 1.35rem;
+            box-shadow: var(--shadow);
+        }
+
+        .home-updates-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 1rem;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 0.9rem;
+        }
+
+        .home-updates-title {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.55rem;
+            color: var(--text);
+            font-size: 1.08rem;
+            font-weight: 800;
+        }
+
+        .home-updates-title i {
+            color: var(--blue);
+        }
+
+        .home-updates-date {
+            color: var(--soft);
+            font-size: 0.8rem;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .home-update-label {
+            display: inline-flex;
+            margin-top: 1.05rem;
+            border: 1px solid #86efac;
+            border-radius: 999px;
+            background: #f0fdf4;
+            padding: 0.2rem 0.55rem;
+            color: var(--green);
+            font-size: 0.73rem;
+            font-weight: 800;
+        }
+
+        .home-update-heading {
+            margin-top: 0.75rem;
+            color: var(--text);
+            font-size: 1.25rem;
+            line-height: 1.3;
+            font-weight: 800;
+        }
+
+        .home-update-copy {
+            margin-top: 0.55rem;
+            color: var(--muted);
+            font-size: 0.93rem;
+        }
+
+        .home-update-list {
+            display: grid;
+            gap: 0.55rem;
+            margin-top: 1rem;
+            list-style: none;
+        }
+
+        .home-update-list li {
+            position: relative;
+            padding-left: 1.15rem;
+            color: var(--muted);
+            font-size: 0.87rem;
+            line-height: 1.45;
+        }
+
+        .home-update-list li::before {
+            position: absolute;
+            top: 0.47rem;
+            left: 0;
+            width: 0.4rem;
+            height: 0.4rem;
+            border-radius: 50%;
+            background: var(--blue);
+            content: "";
+        }
+
         .eyebrow {
             display: inline-flex;
             align-items: center;
@@ -675,6 +771,14 @@
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
+            .hero-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .home-updates {
+                max-width: 620px;
+            }
+
             .stat-strip {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
@@ -746,6 +850,10 @@
                 flex-direction: column;
             }
 
+            .home-updates {
+                padding: 1.1rem;
+            }
+
             .button {
                 width: 100%;
             }
@@ -772,30 +880,46 @@
                 <a class="nav-link" href="#evaluation"><i class="fas fa-chart-line"></i> Evaluation</a>
                 <a class="nav-link" href="#methods"><i class="fas fa-layer-group"></i> Methods</a>
                 <a class="nav-link" href="#contributors"><i class="fas fa-users"></i> Contributors</a>
-                <a class="nav-link" href="updates.html"><i class="fas fa-clock-rotate-left"></i> Updates</a>
             </nav>
         </aside>
 
         <main class="main">
             <section class="hero" id="home">
                 <div class="hero-inner">
-                    <div class="eyebrow"><i class="fas fa-graduation-cap"></i> Personalized Learning Recommendation Benchmark</div>
-                    <h1>
-                        UniER
-                        <span class="hero-title-tail">A Unified Benchmark for<br>Item-level and Path-level<br>Exercise Recommendation</span>
-                    </h1>
-                    <p class="hero-copy">
-                        UniER evaluates personalized exercise recommendation under one framework by aligning item-level recommendation and path-level learning path generation with Weighted Cognitive Gain.
-                    </p>
-                    <div class="hero-actions">
-                        <a class="button" href="https://arxiv.org/abs/2605.16750" target="_blank" rel="noopener"><i class="fas fa-file-lines"></i> Paper</a>
-                        <a class="button" href="https://github.com/chanllon/UniER" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> Code and Data</a>
-                    </div>
-                    <div class="stat-strip" aria-label="Benchmark facts">
-                        <a class="stat-pill" href="#datasets"><strong>9</strong><span>public datasets</span></a>
-                        <a class="stat-pill" href="#methods"><strong>18</strong><span>representative methods</span></a>
-                        <a class="stat-pill" href="#methods"><strong>4</strong><span>generation families</span></a>
-                        <a class="stat-pill" href="#evaluation"><strong>2</strong><span>WCG task settings</span></a>
+                    <div class="hero-layout">
+                        <div class="hero-content">
+                            <div class="eyebrow"><i class="fas fa-graduation-cap"></i> Personalized Learning Recommendation Benchmark</div>
+                            <h1>
+                                UniER
+                                <span class="hero-title-tail">A Unified Benchmark for<br>Item-level and Path-level<br>Exercise Recommendation</span>
+                            </h1>
+                            <p class="hero-copy">
+                                UniER evaluates personalized exercise recommendation under one framework by aligning item-level recommendation and path-level learning path generation with Weighted Cognitive Gain.
+                            </p>
+                            <div class="hero-actions">
+                                <a class="button" href="https://arxiv.org/abs/2605.16750" target="_blank" rel="noopener"><i class="fas fa-file-lines"></i> Paper</a>
+                                <a class="button" href="https://github.com/chanllon/UniER" target="_blank" rel="noopener"><i class="fas fa-arrow-up-right-from-square"></i> Code and Data</a>
+                            </div>
+                            <div class="stat-strip" aria-label="Benchmark facts">
+                                <a class="stat-pill" href="#datasets"><strong>9</strong><span>public datasets</span></a>
+                                <a class="stat-pill" href="#methods"><strong>18</strong><span>representative methods</span></a>
+                                <a class="stat-pill" href="#methods"><strong>4</strong><span>generation families</span></a>
+                                <a class="stat-pill" href="#evaluation"><strong>2</strong><span>WCG task settings</span></a>
+                            </div>
+                        </div>
+                        <aside class="home-updates" aria-label="Latest project update">
+                            <div class="home-updates-header">
+                                <div class="home-updates-title"><i class="fas fa-clock-rotate-left"></i> Updates</div>
+                                <time class="home-updates-date" datetime="2026-06">Jun. 2026</time>
+                            </div>
+                            <span class="home-update-label">Website launch</span>
+                            <h2 class="home-update-heading">UniER is now online.</h2>
+                            <p class="home-update-copy">The UniER benchmark website is publicly available at www.unier-benchmark.com.</p>
+                            <ul class="home-update-list">
+                                <li>Benchmark documentation is available in one place.</li>
+                                <li>Links to the UniER paper and code repository are included.</li>
+                            </ul>
+                        </aside>
                     </div>
                 </div>
             </section>
